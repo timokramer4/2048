@@ -6,24 +6,24 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class Logic {
-	private JLabel[] label;
+	private JLabel[] patterns;
 	private boolean running = true;
 	private int score = 0;
 	private int multiplier = 1;
-	private JLabel scoreRight;
+	private JLabel scoreValue;
 	private Game frame;
 
 	/* Default constructor */
-	public Logic(JLabel[] label, JLabel scoreRight, Game game) {
-		this.label = label;
-		this.scoreRight = scoreRight;
+	public Logic(JLabel[] patterns, JLabel score, Game game) {
+		this.patterns = patterns;
+		this.scoreValue = score;
 		this.frame = game;
 	}
 
 	/* Draw the game field */
 	public void draw() {
 		for (int n = 0; n < 16; n++) {
-			label[n].setBackground(getFieldColor(n));
+			patterns[n].setBackground(getFieldColor(n));
 		}
 	}
 
@@ -33,10 +33,10 @@ public class Logic {
 		Color tempColor;
 
 		/* Empty field are white and filled patterns are colored */
-		if (label[n].getText().equals("")) {
+		if (patterns[n].getText().equals("")) {
 			tempColor = Color.WHITE;
 		} else {
-			int num = Integer.parseInt(label[n].getText());
+			int num = Integer.parseInt(patterns[n].getText());
 
 			switch (num) {
 			case 2:
@@ -88,16 +88,16 @@ public class Logic {
 			Random gen = new Random();
 			if (multiplier <= 3) {
 				int newMultiplier = gen.nextInt(multiplier) + 1;
-				label[key].setText(Integer.toString((int) Math.pow(2, 
+				patterns[key].setText(Integer.toString((int) Math.pow(2, 
 						newMultiplier)));
 			} else {
 				int newMultiplier = gen.nextInt(4) + (multiplier - 3);
-				label[key].setText(Integer.toString((int) Math.pow(2, 
+				patterns[key].setText(Integer.toString((int) Math.pow(2, 
 						newMultiplier)));
 			}
 
 			// Set background color.
-			label[key].setBackground(getFieldColor(key));
+			patterns[key].setBackground(getFieldColor(key));
 		}
 	}
 
@@ -109,7 +109,7 @@ public class Logic {
 		// Until a free field was found
 		do {
 			key = gen.nextInt(16);
-		} while (!(label[key].getText().equals("")));
+		} while (!(patterns[key].getText().equals("")));
 
 		// Return the index of the random field
 		return key;
@@ -124,26 +124,26 @@ public class Logic {
 					for (int n = k - 1; n >= 4 * i; n--) {
 						
 						// Check whether the next field is empty or has the same value
-						if (label[n].getText().equals("")) {
-							label[n].setText(label[n + 1].getText());
-							label[n + 1].setText("");
+						if (patterns[n].getText().equals("")) {
+							patterns[n].setText(patterns[n + 1].getText());
+							patterns[n + 1].setText("");
 
 							// Set background color
-							label[n].setBackground(getFieldColor(n));
-							label[n + 1].setBackground(getFieldColor(n + 1));
-						} else if (label[n].getText().equals(label[n + 1].
+							patterns[n].setBackground(getFieldColor(n));
+							patterns[n + 1].setBackground(getFieldColor(n + 1));
+						} else if (patterns[n].getText().equals(patterns[n + 1].
 								getText())) {
 							// Duplicate the value and remove the second field
-							label[n].setText(Integer.toString((Integer.parseInt
-									(label[n].getText()) * 2)));
-							label[n + 1].setText("");
+							patterns[n].setText(Integer.toString((Integer.parseInt
+									(patterns[n].getText()) * 2)));
+							patterns[n + 1].setText("");
 
 							// Set background color
-							label[n].setBackground(getFieldColor(n));
-							label[n + 1].setBackground(getFieldColor(n + 1));
+							patterns[n].setBackground(getFieldColor(n));
+							patterns[n + 1].setBackground(getFieldColor(n + 1));
 
 							// Increase score
-							score += Integer.parseInt(label[n].getText());
+							score += Integer.parseInt(patterns[n].getText());
 						}
 					}
 				}
@@ -162,26 +162,26 @@ public class Logic {
 					for (int n = k + 1; n <= 4 * i + 3; n++) {
 
 						// Check whether the next field is empty or has the same value
-						if (label[n].getText().equals("")) {
-							label[n].setText(label[n - 1].getText());
-							label[n - 1].setText("");
+						if (patterns[n].getText().equals("")) {
+							patterns[n].setText(patterns[n - 1].getText());
+							patterns[n - 1].setText("");
 
 							// Set background color
-							label[n].setBackground(getFieldColor(n));
-							label[n - 1].setBackground(getFieldColor(n - 1));
-						} else if (label[n].getText().equals(label[n - 1].
+							patterns[n].setBackground(getFieldColor(n));
+							patterns[n - 1].setBackground(getFieldColor(n - 1));
+						} else if (patterns[n].getText().equals(patterns[n - 1].
 								getText())) {
 							// Duplicate the value and remove the second field
-							label[n].setText(Integer.toString((Integer.
-									parseInt(label[n].getText()) * 2)));
-							label[n - 1].setText("");
+							patterns[n].setText(Integer.toString((Integer.
+									parseInt(patterns[n].getText()) * 2)));
+							patterns[n - 1].setText("");
 
 							// Set background color
-							label[n].setBackground(getFieldColor(n));
-							label[n - 1].setBackground(getFieldColor(n - 1));
+							patterns[n].setBackground(getFieldColor(n));
+							patterns[n - 1].setBackground(getFieldColor(n - 1));
 
 							// Increase score
-							score += Integer.parseInt(label[n].getText());
+							score += Integer.parseInt(patterns[n].getText());
 						}
 					}
 				}
@@ -200,27 +200,27 @@ public class Logic {
 					for (int n = k - 4; n >= i - (4 * 3); n -= 4) {
 
 						// Check whether the next field is empty or has the same value
-						if (label[n].getText().equals("")) {
-							label[n].setText(label[n + 4].getText());
-							label[n + 4].setText("");
+						if (patterns[n].getText().equals("")) {
+							patterns[n].setText(patterns[n + 4].getText());
+							patterns[n + 4].setText("");
 
 							// Set background color
-							label[n].setBackground(getFieldColor(n));
-							label[n + 4].setBackground(getFieldColor(n + 4));
+							patterns[n].setBackground(getFieldColor(n));
+							patterns[n + 4].setBackground(getFieldColor(n + 4));
 
-						} else if (label[n].getText().equals(label[n + 4].
+						} else if (patterns[n].getText().equals(patterns[n + 4].
 								getText())) {
 							// Duplicate the value and remove the second field
-							label[n].setText(Integer.toString((Integer.parseInt
-									(label[n].getText()) * 2)));
-							label[n + 4].setText("");
+							patterns[n].setText(Integer.toString((Integer.parseInt
+									(patterns[n].getText()) * 2)));
+							patterns[n + 4].setText("");
 
 							// Set background color
-							label[n].setBackground(getFieldColor(n));
-							label[n + 4].setBackground(getFieldColor(n + 4));
+							patterns[n].setBackground(getFieldColor(n));
+							patterns[n + 4].setBackground(getFieldColor(n + 4));
 
 							// Increase score
-							score += Integer.parseInt(label[n].getText());
+							score += Integer.parseInt(patterns[n].getText());
 						}
 					}
 				}
@@ -239,27 +239,27 @@ public class Logic {
 					for (int n = (k + 4); n <= i + 12; n += 4) {
 
 						// Check whether the next field is empty or has the same value
-						if (label[n].getText().equals("")) {
-							label[n].setText(label[n - 4].getText());
-							label[n - 4].setText("");
+						if (patterns[n].getText().equals("")) {
+							patterns[n].setText(patterns[n - 4].getText());
+							patterns[n - 4].setText("");
 
 							// Set background color
-							label[n].setBackground(getFieldColor(n));
-							label[n - 4].setBackground(getFieldColor(n - 4));
+							patterns[n].setBackground(getFieldColor(n));
+							patterns[n - 4].setBackground(getFieldColor(n - 4));
 
-						} else if (label[n].getText().equals(label[n - 4].
+						} else if (patterns[n].getText().equals(patterns[n - 4].
 								getText())) {
 							// Duplicate the value and remove the second field
-							label[n].setText(Integer.toString((Integer.parseInt
-									(label[n].getText()) * 2)));
-							label[n - 4].setText("");
+							patterns[n].setText(Integer.toString((Integer.parseInt
+									(patterns[n].getText()) * 2)));
+							patterns[n - 4].setText("");
 
 							// Set background color
-							label[n].setBackground(getFieldColor(n));
-							label[n - 4].setBackground(getFieldColor(n - 4));
+							patterns[n].setBackground(getFieldColor(n));
+							patterns[n - 4].setBackground(getFieldColor(n - 4));
 
 							// Increase score
-							score += Integer.parseInt(label[n].getText());
+							score += Integer.parseInt(patterns[n].getText());
 						}
 					}
 				}
@@ -276,7 +276,7 @@ public class Logic {
 		createNewField();
 
 		// Update Score
-		scoreRight.setText(Integer.toString(score));
+		scoreValue.setText(Integer.toString(score));
 	}
 
 	/*
@@ -315,7 +315,7 @@ public class Logic {
 
 		/* Check how many blocks are currently empty. */
 		for (int i = 0; i < 16; i++) {
-			if (label[i].getText().equals("")) {
+			if (patterns[i].getText().equals("")) {
 				counter++;
 			}
 		}
