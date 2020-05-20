@@ -9,7 +9,6 @@ public class Logic {
 	private JLabel[] patterns;
 	private boolean running = true;
 	private int score = 0;
-	private int multiplier = 1;
 	private JLabel scoreValue;
 	private Game frame;
 
@@ -77,7 +76,6 @@ public class Logic {
 				break;
 			}
 		}
-
 		return tempColor;
 	}
 
@@ -85,16 +83,7 @@ public class Logic {
 	public void createNewField() {
 		if (running == true) {
 			int key = getEmptyRandomField();
-			Random gen = new Random();
-			if (multiplier <= 3) {
-				int newMultiplier = gen.nextInt(multiplier) + 1;
-				patterns[key].setText(Integer.toString((int) Math.pow(2, 
-						newMultiplier)));
-			} else {
-				int newMultiplier = gen.nextInt(4) + (multiplier - 3);
-				patterns[key].setText(Integer.toString((int) Math.pow(2, 
-						newMultiplier)));
-			}
+			patterns[key].setText(Integer.toString((int) 2));
 
 			// Set background color.
 			patterns[key].setBackground(getFieldColor(key));
@@ -272,41 +261,10 @@ public class Logic {
 	/* Refresh the UI and check running state */
 	private void refresh() {
 		gameOver();
-		setMultiplier();
 		createNewField();
 
 		// Update Score
 		scoreValue.setText(Integer.toString(score));
-	}
-
-	/*
-	 * Determine the current multiplier based on current score, used to
-	 * calculating potential value for generated block.
-	 */
-	private void setMultiplier() {
-		if (score < 40) {
-			multiplier = 1;
-		} else if ((score >= 40) && (score < 120)) {
-			multiplier = 2;
-		} else if ((score >= 120) && (score < 280)) {
-			multiplier = 3;
-		} else if ((score >= 280) && (score < 600)) {
-			multiplier = 4;
-		} else if ((score >= 600) && (score < 1240)) {
-			multiplier = 5;
-		} else if ((score >= 1240) && (score < 2520)) {
-			multiplier = 6;
-		} else if ((score >= 2520) && (score < 5080)) {
-			multiplier = 7;
-		} else if ((score >= 5080) && (score < 10200)) {
-			multiplier = 8;
-		} else if ((score >= 10200) && (score < 20440)) {
-			multiplier = 9;
-		} else if ((score >= 20440) && (score < 40920)) {
-			multiplier = 10;
-		} else {
-			multiplier = 11;
-		}
 	}
 
 	/* Check Game Over state */

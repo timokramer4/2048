@@ -96,22 +96,17 @@ public class Game extends JFrame implements KeyListener {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println(e.getKeyCode());
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			System.out.println("Hoch");
 			logic.moveUp();
 			break;
 		case KeyEvent.VK_DOWN:
-			System.out.println("Runter");
 			logic.moveDown();
 			break;
 		case KeyEvent.VK_LEFT:
-			System.out.println("Links");
 			logic.moveLeft();
 			break;
 		case KeyEvent.VK_RIGHT:
-			System.out.println("Rechts");
 			logic.moveRight();
 			break;
 		}
