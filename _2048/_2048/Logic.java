@@ -6,23 +6,21 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class Logic {
-	private JLabel[] patterns;
-	private boolean running = true;
+	private JLabel[] fields;
+	private boolean gameRunning = true;
 	private int score = 0;
 	private JLabel scoreValue;
-	private Game frame;
 
 	/* Default constructor */
-	public Logic(JLabel[] patterns, JLabel score, Game game) {
-		this.patterns = patterns;
+	public Logic(JLabel[] fields, JLabel score) {
+		this.fields = fields;
 		this.scoreValue = score;
-		this.frame = game;
 	}
 
 	/* Draw the game field */
 	public void draw() {
 		for (int n = 0; n < 16; n++) {
-			patterns[n].setBackground(getFieldColor(n));
+			fields[n].setBackground(getFieldColor(n));
 		}
 	}
 
@@ -32,12 +30,12 @@ public class Logic {
 		Color tempColor;
 
 		/* Empty field are white and filled patterns are colored */
-		if (patterns[n].getText().equals("")) {
+		if (fields[n].getText().equals("")) {
 			tempColor = Color.WHITE;
 		} else {
-			int num = Integer.parseInt(patterns[n].getText());
+			int fieldnumber = Integer.parseInt(fields[n].getText());
 
-			switch (num) {
+			switch (fieldnumber) {
 			case 2:
 				tempColor = new Color(141, 90, 151);
 				break;
@@ -79,60 +77,51 @@ public class Logic {
 		return tempColor;
 	}
 
-	/* Create new random field after movement */
+	/* Create new random field with 2 after movement */
 	public void createNewField() {
-		if (running == true) {
-			int key = getEmptyRandomField();
-			patterns[key].setText(Integer.toString((int) 2));
+		if (gameRunning == true) {
+			Random rnd = new Random();
+			int index;
+
+			// Until a free field was found
+			do {
+				index = rnd.nextInt(16);
+			} while (!(fields[index].getText().equals("")));
+
+			fields[index].setText(Integer.toString((int) 2));
 
 			// Set background color.
-			patterns[key].setBackground(getFieldColor(key));
+			fields[index].setBackground(getFieldColor(index));
 		}
-	}
-
-	/* Get empty field random */
-	public int getEmptyRandomField() {
-		Random gen = new Random();
-		int key;
-
-		// Until a free field was found
-		do {
-			key = gen.nextInt(16);
-		} while (!(patterns[key].getText().equals("")));
-
-		// Return the index of the random field
-		return key;
 	}
 
 	/* Move all available patterns left */
 	public void moveLeft() {
 		// Only in running mode
-		if (running == true) {
+		if (gameRunning == true) {
 			for (int i = 0; i < 4; i++) {
 				for (int k = 4 * i + 1; k < 4 * i + 4; k++) {
 					for (int n = k - 1; n >= 4 * i; n--) {
-						
+
 						// Check whether the next field is empty or has the same value
-						if (patterns[n].getText().equals("")) {
-							patterns[n].setText(patterns[n + 1].getText());
-							patterns[n + 1].setText("");
+						if (fields[n].getText().equals("")) {
+							fields[n].setText(fields[n + 1].getText());
+							fields[n + 1].setText("");
 
 							// Set background color
-							patterns[n].setBackground(getFieldColor(n));
-							patterns[n + 1].setBackground(getFieldColor(n + 1));
-						} else if (patterns[n].getText().equals(patterns[n + 1].
-								getText())) {
+							fields[n].setBackground(getFieldColor(n));
+							fields[n + 1].setBackground(getFieldColor(n + 1));
+						} else if (fields[n].getText().equals(fields[n + 1].getText())) {
 							// Duplicate the value and remove the second field
-							patterns[n].setText(Integer.toString((Integer.parseInt
-									(patterns[n].getText()) * 2)));
-							patterns[n + 1].setText("");
+							fields[n].setText(Integer.toString((Integer.parseInt(fields[n].getText()) * 2)));
+							fields[n + 1].setText("");
 
 							// Set background color
-							patterns[n].setBackground(getFieldColor(n));
-							patterns[n + 1].setBackground(getFieldColor(n + 1));
+							fields[n].setBackground(getFieldColor(n));
+							fields[n + 1].setBackground(getFieldColor(n + 1));
 
 							// Increase score
-							score += Integer.parseInt(patterns[n].getText());
+							score += Integer.parseInt(fields[n].getText());
 						}
 					}
 				}
@@ -145,32 +134,30 @@ public class Logic {
 	/* Move all available patterns right */
 	public void moveRight() {
 		// Only in running mode
-		if (running == true) {
+		if (gameRunning == true) {
 			for (int i = 0; i < 4; i++) {
 				for (int k = 4 * i + 3; k >= 4 * i; k--) {
 					for (int n = k + 1; n <= 4 * i + 3; n++) {
 
 						// Check whether the next field is empty or has the same value
-						if (patterns[n].getText().equals("")) {
-							patterns[n].setText(patterns[n - 1].getText());
-							patterns[n - 1].setText("");
+						if (fields[n].getText().equals("")) {
+							fields[n].setText(fields[n - 1].getText());
+							fields[n - 1].setText("");
 
 							// Set background color
-							patterns[n].setBackground(getFieldColor(n));
-							patterns[n - 1].setBackground(getFieldColor(n - 1));
-						} else if (patterns[n].getText().equals(patterns[n - 1].
-								getText())) {
+							fields[n].setBackground(getFieldColor(n));
+							fields[n - 1].setBackground(getFieldColor(n - 1));
+						} else if (fields[n].getText().equals(fields[n - 1].getText())) {
 							// Duplicate the value and remove the second field
-							patterns[n].setText(Integer.toString((Integer.
-									parseInt(patterns[n].getText()) * 2)));
-							patterns[n - 1].setText("");
+							fields[n].setText(Integer.toString((Integer.parseInt(fields[n].getText()) * 2)));
+							fields[n - 1].setText("");
 
 							// Set background color
-							patterns[n].setBackground(getFieldColor(n));
-							patterns[n - 1].setBackground(getFieldColor(n - 1));
+							fields[n].setBackground(getFieldColor(n));
+							fields[n - 1].setBackground(getFieldColor(n - 1));
 
 							// Increase score
-							score += Integer.parseInt(patterns[n].getText());
+							score += Integer.parseInt(fields[n].getText());
 						}
 					}
 				}
@@ -183,33 +170,31 @@ public class Logic {
 	/* Move all available patterns up */
 	public void moveUp() {
 		// Only in running mode
-		if (running == true) {
+		if (gameRunning == true) {
 			for (int i = 12; i < 16; i++) {
 				for (int k = i - 8; k <= i; k += 4) {
 					for (int n = k - 4; n >= i - (4 * 3); n -= 4) {
 
 						// Check whether the next field is empty or has the same value
-						if (patterns[n].getText().equals("")) {
-							patterns[n].setText(patterns[n + 4].getText());
-							patterns[n + 4].setText("");
+						if (fields[n].getText().equals("")) {
+							fields[n].setText(fields[n + 4].getText());
+							fields[n + 4].setText("");
 
 							// Set background color
-							patterns[n].setBackground(getFieldColor(n));
-							patterns[n + 4].setBackground(getFieldColor(n + 4));
+							fields[n].setBackground(getFieldColor(n));
+							fields[n + 4].setBackground(getFieldColor(n + 4));
 
-						} else if (patterns[n].getText().equals(patterns[n + 4].
-								getText())) {
+						} else if (fields[n].getText().equals(fields[n + 4].getText())) {
 							// Duplicate the value and remove the second field
-							patterns[n].setText(Integer.toString((Integer.parseInt
-									(patterns[n].getText()) * 2)));
-							patterns[n + 4].setText("");
+							fields[n].setText(Integer.toString((Integer.parseInt(fields[n].getText()) * 2)));
+							fields[n + 4].setText("");
 
 							// Set background color
-							patterns[n].setBackground(getFieldColor(n));
-							patterns[n + 4].setBackground(getFieldColor(n + 4));
+							fields[n].setBackground(getFieldColor(n));
+							fields[n + 4].setBackground(getFieldColor(n + 4));
 
 							// Increase score
-							score += Integer.parseInt(patterns[n].getText());
+							score += Integer.parseInt(fields[n].getText());
 						}
 					}
 				}
@@ -222,33 +207,31 @@ public class Logic {
 	/* Move all available patterns down */
 	public void moveDown() {
 		// Only in running mode
-		if (running == true) {
+		if (gameRunning == true) {
 			for (int i = 0; i < 4; i++) {
 				for (int k = i + 8; k >= i; k -= 4) {
 					for (int n = (k + 4); n <= i + 12; n += 4) {
 
 						// Check whether the next field is empty or has the same value
-						if (patterns[n].getText().equals("")) {
-							patterns[n].setText(patterns[n - 4].getText());
-							patterns[n - 4].setText("");
+						if (fields[n].getText().equals("")) {
+							fields[n].setText(fields[n - 4].getText());
+							fields[n - 4].setText("");
 
 							// Set background color
-							patterns[n].setBackground(getFieldColor(n));
-							patterns[n - 4].setBackground(getFieldColor(n - 4));
+							fields[n].setBackground(getFieldColor(n));
+							fields[n - 4].setBackground(getFieldColor(n - 4));
 
-						} else if (patterns[n].getText().equals(patterns[n - 4].
-								getText())) {
+						} else if (fields[n].getText().equals(fields[n - 4].getText())) {
 							// Duplicate the value and remove the second field
-							patterns[n].setText(Integer.toString((Integer.parseInt
-									(patterns[n].getText()) * 2)));
-							patterns[n - 4].setText("");
+							fields[n].setText(Integer.toString((Integer.parseInt(fields[n].getText()) * 2)));
+							fields[n - 4].setText("");
 
 							// Set background color
-							patterns[n].setBackground(getFieldColor(n));
-							patterns[n - 4].setBackground(getFieldColor(n - 4));
+							fields[n].setBackground(getFieldColor(n));
+							fields[n - 4].setBackground(getFieldColor(n - 4));
 
 							// Increase score
-							score += Integer.parseInt(patterns[n].getText());
+							score += Integer.parseInt(fields[n].getText());
 						}
 					}
 				}
@@ -271,23 +254,22 @@ public class Logic {
 	private void gameOver() {
 		int counter = 0;
 
-		/* Check how many blocks are currently empty. */
+		/* Check amount of emty fields */
 		for (int i = 0; i < 16; i++) {
-			if (patterns[i].getText().equals("")) {
+			if (fields[i].getText().equals("")) {
 				counter++;
 			}
 		}
 
-		// If there is no more empty block.
+		// No more empty fields
 		if (counter == 0) {
-			running = false;
+			gameRunning = false;
 
 			// Show Game Over message
 			JOptionPane.showMessageDialog(null, "Game Over\nScore: " + score);
 
 			// Game exit
-			frame.setVisible(false);
-			frame.dispose();
+			System.exit(1);
 		}
 	}
 }
