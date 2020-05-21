@@ -2,6 +2,7 @@ package _2048;
 
 import java.awt.Color;
 import java.util.Random;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -269,7 +270,7 @@ public class Logic {
 			JOptionPane.showMessageDialog(null, "Game Over\nScore: " + score);
 
 			// Game exit
-			System.exit(1);
+			System.exit(0);
 		}
 	}
 }
