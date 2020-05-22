@@ -13,7 +13,8 @@ public class GameField extends JPanel {
 	
 	private JLabel fields[];
 	public Logic logic;
-
+	
+	//Kontruktor - Aufbau des Spielfeldes
 	GameField(Scoreboard scoreboard){
 		this.setLayout(new GridLayout(4, 4));
 		fields = new JLabel[16];
@@ -22,12 +23,12 @@ public class GameField extends JPanel {
 		/* Style der Kaestchen des Spielfeldes festlegen */
 		for (int i = 0; i < 16; i++) {
 			fields[i] = new JLabel("", JLabel.CENTER);
-			fields[i].setBorder(BorderFactory.createLineBorder(Color.GRAY));
+			fields[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			fields[i].setFont(new Font("Open Sans", Font.PLAIN, 30));
 			fields[i].setOpaque(true);
 			this.add(fields[i]);
 		}
-
+		//Ausführen der Draw Methode
 		logic.draw();
 
 		/*

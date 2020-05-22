@@ -19,7 +19,7 @@ public class Logic {
 
 	/*
 	 * Methode um das Spielfeld zu zeichnen und um der in einem Feld stehenden Zahl
-	 * die zugeh�rige Farbe zuzuteilen.
+	 * die zugeh�rige Farbe zuzuteilen.
 	 */
 	public void draw() {
 		for (int n = 0; n < 16; n++) {
@@ -102,20 +102,26 @@ public class Logic {
 		}
 	}
 
-	/* Move all available patterns left */
+	/* Methode um alle Zahlen in den Kästchen nach links zu bewegen */
 	public void moveLeft() {
-		// Only in running mode
+		// Das Spiel muss laufen um die folgenden Bedingungen auszuführen
 		if (gameRunning == true) {
 			for (int i = 0; i < 4; i++) {
 				for (int k = 4 * i + 1; k < 4 * i + 4; k++) {
 					for (int n = k - 1; n >= 4 * i; n--) {
 
-						// Check whether the next field is empty or has the same value
+						/*
+						 * Checken ob das nächste Feld leer ist oder die gleiche Zahl im folgenden Feld
+						 * steht
+						 */
 						if (fields[n].getText().equals("")) {
 							fields[n].setText(fields[n + 1].getText());
 							fields[n + 1].setText("");
 
-							// Set background color
+							/*
+							 * Hintergrundfarbe in dem neues Feld der Zahl angepasst setzen und in dem
+							 * leeren Feld wieder die weiße Farbe setzen
+							 */
 							fields[n].setBackground(getFieldColor(n));
 							fields[n + 1].setBackground(getFieldColor(n + 1));
 						} else if (fields[n].getText().equals(fields[n + 1].getText())) {
@@ -127,7 +133,7 @@ public class Logic {
 							fields[n].setBackground(getFieldColor(n));
 							fields[n + 1].setBackground(getFieldColor(n + 1));
 
-							// Increase score
+							// Score um die neu dazugekommene Zahl erhöhen
 							score += Integer.parseInt(fields[n].getText());
 						}
 					}
@@ -163,7 +169,7 @@ public class Logic {
 							fields[n].setBackground(getFieldColor(n));
 							fields[n - 1].setBackground(getFieldColor(n - 1));
 
-							// Increase score
+							// Score um die neu dazugekommene Zahl erhöhen
 							score += Integer.parseInt(fields[n].getText());
 						}
 					}
@@ -200,7 +206,7 @@ public class Logic {
 							fields[n].setBackground(getFieldColor(n));
 							fields[n + 4].setBackground(getFieldColor(n + 4));
 
-							// Increase score
+							// Score um die neu dazugekommene Zahl erhöhen
 							score += Integer.parseInt(fields[n].getText());
 						}
 					}
@@ -237,7 +243,7 @@ public class Logic {
 							fields[n].setBackground(getFieldColor(n));
 							fields[n - 4].setBackground(getFieldColor(n - 4));
 
-							// Increase score
+							// Score um die neu dazugekommene Zahl erhöhen
 							score += Integer.parseInt(fields[n].getText());
 						}
 					}
@@ -253,29 +259,34 @@ public class Logic {
 		gameOver();
 		createNewField();
 
-		// Update Score
+		// Score updaten
 		scoreboard.setScore(score);
 	}
 
-	/* Check Game Over state */
+	/* Checken ob das Spiel vorbei ist */
 	private void gameOver() {
+		// Zähler für die freien Felder
 		int counter = 0;
 
-		/* Check amount of empty fields */
+		// Die Anzahl an freien Feldern checken und zählen
 		for (int i = 0; i < 16; i++) {
 			if (fields[i].getText().equals("")) {
 				counter++;
 			}
 		}
 
-		// No more empty fields
+		/*
+		 * Wenn der counter 0 ist, es also keine freien Felder mehr gibt, dann wird der
+		 * boolean für daslaufende Spiel auf false gesetzt und der erreichte Score und
+		 * Game Over auf dem Bildschirm ausgegeben.
+		 */
 		if (counter == 0) {
 			gameRunning = false;
 
-			// Show Game Over message
+			// Message Game Over
 			JOptionPane.showMessageDialog(null, "Game Over\nScore: " + score);
 
-			// Game exit
+			// Game beenden
 			System.exit(0);
 		}
 	}
