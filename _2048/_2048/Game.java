@@ -12,75 +12,81 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 public class Game extends JFrame implements KeyListener {
 
 	private JLabel fields[];
-	
-	/* Scoreboard */
+
+	/* Scoreboard JLabel erstellen und positionieren */
 	private JPanel scoreboard;
-	private JLabel scoreLabel = new JLabel("Score: ", SwingConstants.CENTER);
-	private JLabel scoreValue = new JLabel("0", SwingConstants.CENTER);
+	private JLabel scoreLabel = new JLabel("Score: ", JLabel.CENTER);
+	private JLabel scoreValue = new JLabel("0", JLabel.CENTER);
 
 	private JPanel game;
 	private Logic logic;
 
-	/* Default constructor - Initialize all required variables */
+	/* Konstruktor - Initialisieren aller Variablen */
 	public Game() {
 		fields = new JLabel[16];
-		scoreLabel = new JLabel("Score: ", SwingConstants.CENTER);
-		scoreValue = new JLabel("0", SwingConstants.CENTER);
+		scoreLabel = new JLabel("Score: ", JLabel.CENTER);
+		scoreValue = new JLabel("0", JLabel.CENTER);
 
-		// Set Frame properties
+		// Spielfeldbenennung und BoyLayout an der Y-Achse anlegen.
 		this.setTitle("2048");
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.addKeyListener(this);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// Create scoreboard panel
+		// erstellen des scoreboards
 		scoreboard = new JPanel();
 		scoreboard.add(scoreLabel);
 		scoreboard.add(scoreValue);
 
-		// Create game panel
+		// Spielfeldgröße festlegen und Übergabeparameter an Klasse Logic festlegen
 		game = new JPanel(new GridLayout(4, 4));
 		logic = new Logic(fields, scoreValue);
 	}
 
-	/* Create and render */
+	/*
+	 * Farbe für das Spielfeldlayout festlegen und Schriftart und Schriftgröße des
+	 * Scores hinzufügen
+	 */
 	private void createAndShow() {
 		Border defaultBorder = BorderFactory.createLineBorder(Color.GRAY);
 
 		scoreLabel.setFont(new Font("Open Sans", Font.PLAIN, 20));
 		scoreValue.setFont(new Font("Open Sans", Font.PLAIN, 20));
 
-		/* Add scoreboard to frame */
+		/* hinzufügen vom scoreboard zum Spielfeld */
 		add(scoreboard);
 
-		/* Set styles for patterns */
+		/* Style der Kästchen des Spielfeldes festlegen */
 		for (int i = 0; i < 16; i++) {
-			fields[i] = new JLabel("", SwingConstants.CENTER);
+			fields[i] = new JLabel("", JLabel.CENTER);
 			fields[i].setBorder(defaultBorder);
 			fields[i].setFont(new Font("Open Sans", Font.PLAIN, 30));
-//			patterns[i].setOpaque(true);
+//			fields[i].setOpaque(true);
 			game.add(fields[i]);
 		}
 
 		logic.draw();
 
-		/* Add game to frame */
+		/*
+		 * Spiel zum Spielfeld hinzufügen und eine preferierte Größe des Spielfeldes
+		 * beim Starten festlegen
+		 */
 		game.setPreferredSize(new Dimension(480, 400));
 		this.add(game);
 
-		// Generate a new number at random location.
+		// Ausführen der Methode um random eine neue 2 im Spielfeld zu schreiben
 		logic.createNewField();
 
 		this.pack();
 		this.setVisible(true);
 	}
 
-	/* Main functionality - start new game instance */
+	/* Main - startet neue Spiel Instanz */
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.createAndShow();

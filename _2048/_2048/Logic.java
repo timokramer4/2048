@@ -12,27 +12,34 @@ public class Logic {
 	private int score = 0;
 	private JLabel scoreValue;
 
-	/* Default constructor */
+	/* Konstruktor - Initialisieren aller Variablen in der Klasse */
 	public Logic(JLabel[] fields, JLabel score) {
 		this.fields = fields;
 		this.scoreValue = score;
 	}
 
-	/* Draw the game field */
+	/*
+	 * Methode um das Spielfeld zu zeichnen und um der in einem Feld stehenden Zahl
+	 * die zugehörige Farbe zuzuteilen.
+	 */
 	public void draw() {
 		for (int n = 0; n < 16; n++) {
 			fields[n].setBackground(getFieldColor(n));
 		}
 	}
 
-	/* Get specific color of block with index n */
+	/*
+	 * Definieren der spezifischen Farbe für den Inhalt der einzelnen FElder im
+	 * Spielfeld
+	 */
 	public Color getFieldColor(int n) {
 
 		Color tempColor;
 
-		/* Empty field are white and filled patterns are colored */
+		/* Leere Felder bleiben weiß */
 		if (fields[n].getText().equals("")) {
 			tempColor = Color.WHITE;
+			/* Felder mit einer Zahl werden farblich dargestellt */
 		} else {
 			int fieldnumber = Integer.parseInt(fields[n].getText());
 
@@ -78,20 +85,20 @@ public class Logic {
 		return tempColor;
 	}
 
-	/* Create new random field with 2 after movement */
+	/* Erstellen einer 2 nach jeder Bewegung random in einem leeren Feld */
 	public void createNewField() {
 		if (gameRunning == true) {
 			Random rnd = new Random();
 			int index;
 
-			// Until a free field was found
+			// es wird solange nach einem freien Feld gesucht, bis eins gefunden wurde.
 			do {
 				index = rnd.nextInt(16);
 			} while (!(fields[index].getText().equals("")));
-
+			// eine 2 wird in das leere Feld geschrieben
 			fields[index].setText(Integer.toString((int) 2));
 
-			// Set background color.
+			// Hintergrundfarbe wird gesetzt.
 			fields[index].setBackground(getFieldColor(index));
 		}
 	}
@@ -255,7 +262,7 @@ public class Logic {
 	private void gameOver() {
 		int counter = 0;
 
-		/* Check amount of emty fields */
+		/* Check amount of empty fields */
 		for (int i = 0; i < 16; i++) {
 			if (fields[i].getText().equals("")) {
 				counter++;
