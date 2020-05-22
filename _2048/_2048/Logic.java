@@ -119,17 +119,20 @@ public class Logic {
 							fields[n + 1].setText("");
 
 							/*
-							 * Hintergrundfarbe in dem neues Feld der Zahl angepasst setzen und in dem
+							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem
 							 * leeren Feld wieder die weiße Farbe setzen
 							 */
 							fields[n].setBackground(getFieldColor(n));
 							fields[n + 1].setBackground(getFieldColor(n + 1));
 						} else if (fields[n].getText().equals(fields[n + 1].getText())) {
-							// Duplicate the value and remove the second field
+							/*
+							 * Die Zahl wird dubliziert in dem folgenden Feld und an der vorherigen Stelle
+							 * gelöscht
+							 */
 							fields[n].setText(Integer.toString((Integer.parseInt(fields[n].getText()) * 2)));
 							fields[n + 1].setText("");
 
-							// Set background color
+							// Neue Hintergrundfarbe für die Zahlen setzen
 							fields[n].setBackground(getFieldColor(n));
 							fields[n + 1].setBackground(getFieldColor(n + 1));
 
@@ -144,28 +147,37 @@ public class Logic {
 		}
 	}
 
-	/* Move all available patterns right */
+	/* Methode um alle Zahlen in den Kästchen nach rechts zu bewegen */
 	public void moveRight() {
-		// Only in running mode
+		// Das Spiel muss laufen um die folgenden Bedingungen auszuführen
 		if (gameRunning == true) {
 			for (int i = 0; i < 4; i++) {
 				for (int k = 4 * i + 3; k >= 4 * i; k--) {
 					for (int n = k + 1; n <= 4 * i + 3; n++) {
 
-						// Check whether the next field is empty or has the same value
+						/*
+						 * Checken ob das nächste Feld leer ist oder die gleiche Zahl im folgenden Feld
+						 * steht
+						 */
 						if (fields[n].getText().equals("")) {
 							fields[n].setText(fields[n - 1].getText());
 							fields[n - 1].setText("");
 
-							// Set background color
+							/*
+							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem
+							 * leeren Feld wieder die weiße Farbe setzen
+							 */
 							fields[n].setBackground(getFieldColor(n));
 							fields[n - 1].setBackground(getFieldColor(n - 1));
 						} else if (fields[n].getText().equals(fields[n - 1].getText())) {
-							// Duplicate the value and remove the second field
+							/*
+							 * Die Zahl wird dubliziert in dem folgenden Feld und an der vorherigen Stelle
+							 * gelöscht
+							 */
 							fields[n].setText(Integer.toString((Integer.parseInt(fields[n].getText()) * 2)));
 							fields[n - 1].setText("");
 
-							// Set background color
+							// Neue Hintergrundfarbe für die Zahlen setzen
 							fields[n].setBackground(getFieldColor(n));
 							fields[n - 1].setBackground(getFieldColor(n - 1));
 
@@ -180,29 +192,38 @@ public class Logic {
 		}
 	}
 
-	/* Move all available patterns up */
+	/* Methode um alle Zahlen in den Kästchen nach oben zu bewegen */
 	public void moveUp() {
-		// Only in running mode
+		// Das Spiel muss laufen um die folgenden Bedingungen auszuführen
 		if (gameRunning == true) {
 			for (int i = 12; i < 16; i++) {
 				for (int k = i - 8; k <= i; k += 4) {
 					for (int n = k - 4; n >= i - (4 * 3); n -= 4) {
 
-						// Check whether the next field is empty or has the same value
+						/*
+						 * Checken ob das nächste Feld leer ist oder die gleiche Zahl im folgenden Feld
+						 * steht
+						 */
 						if (fields[n].getText().equals("")) {
 							fields[n].setText(fields[n + 4].getText());
 							fields[n + 4].setText("");
 
-							// Set background color
+							/*
+							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem
+							 * leeren Feld wieder die weiße Farbe setzen
+							 */
 							fields[n].setBackground(getFieldColor(n));
 							fields[n + 4].setBackground(getFieldColor(n + 4));
 
 						} else if (fields[n].getText().equals(fields[n + 4].getText())) {
-							// Duplicate the value and remove the second field
+							/*
+							 * Die Zahl wird dubliziert in dem folgenden Feld und an der vorherigen Stelle
+							 * gelöscht
+							 */
 							fields[n].setText(Integer.toString((Integer.parseInt(fields[n].getText()) * 2)));
 							fields[n + 4].setText("");
 
-							// Set background color
+							// Neue Hintergrundfarbe für die Zahlen setzen
 							fields[n].setBackground(getFieldColor(n));
 							fields[n + 4].setBackground(getFieldColor(n + 4));
 
@@ -217,29 +238,38 @@ public class Logic {
 		}
 	}
 
-	/* Move all available patterns down */
+	/* Methode um alle Zahlen in den Kästchen nach unten zu bewegen */
 	public void moveDown() {
-		// Only in running mode
+		// Das Spiel muss laufen um die folgenden Bedingungen auszuführen
 		if (gameRunning == true) {
 			for (int i = 0; i < 4; i++) {
 				for (int k = i + 8; k >= i; k -= 4) {
 					for (int n = (k + 4); n <= i + 12; n += 4) {
 
-						// Check whether the next field is empty or has the same value
+						/*
+						 * Checken ob das nächste Feld leer ist oder die gleiche Zahl im folgenden Feld
+						 * steht
+						 */
 						if (fields[n].getText().equals("")) {
 							fields[n].setText(fields[n - 4].getText());
 							fields[n - 4].setText("");
 
-							// Set background color
+							/*
+							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem
+							 * leeren Feld wieder die weiße Farbe setzen
+							 */
 							fields[n].setBackground(getFieldColor(n));
 							fields[n - 4].setBackground(getFieldColor(n - 4));
 
 						} else if (fields[n].getText().equals(fields[n - 4].getText())) {
-							// Duplicate the value and remove the second field
+							/*
+							 * Die Zahl wird dubliziert in dem folgenden Feld und an der vorherigen Stelle
+							 * gelöscht
+							 */
 							fields[n].setText(Integer.toString((Integer.parseInt(fields[n].getText()) * 2)));
 							fields[n - 4].setText("");
 
-							// Set background color
+							// Neue Hintergrundfarbe für die Zahlen setzen
 							fields[n].setBackground(getFieldColor(n));
 							fields[n - 4].setBackground(getFieldColor(n - 4));
 
@@ -259,7 +289,7 @@ public class Logic {
 		gameOver();
 		createNewField();
 
-		// Score updaten
+		// Score aktualisieren
 		scoreboard.setScore(score);
 	}
 
