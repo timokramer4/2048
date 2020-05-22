@@ -2,7 +2,6 @@ package _2048;
 
 import java.awt.Color;
 import java.util.Random;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -10,17 +9,17 @@ public class Logic {
 	private JLabel[] fields;
 	private boolean gameRunning = true;
 	private int score = 0;
-	private JLabel scoreValue;
+	private Scoreboard scoreboard;
 
 	/* Konstruktor - Initialisieren aller Variablen in der Klasse */
-	public Logic(JLabel[] fields, JLabel score) {
+	public Logic(JLabel[] fields, Scoreboard scoreboard) {
 		this.fields = fields;
-		this.scoreValue = score;
+		this.scoreboard = scoreboard;
 	}
 
 	/*
 	 * Methode um das Spielfeld zu zeichnen und um der in einem Feld stehenden Zahl
-	 * die zugehÃ¶rige Farbe zuzuteilen.
+	 * die zugehörige Farbe zuzuteilen.
 	 */
 	public void draw() {
 		for (int n = 0; n < 16; n++) {
@@ -255,7 +254,7 @@ public class Logic {
 		createNewField();
 
 		// Update Score
-		scoreValue.setText(Integer.toString(score));
+		scoreboard.setScore(score);
 	}
 
 	/* Check Game Over state */
