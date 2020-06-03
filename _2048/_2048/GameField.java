@@ -10,25 +10,26 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GameField extends JPanel {
-	
+
 	private JLabel fields[];
 	public Logic logic;
-	
-	//Kontruktor - Aufbau des Spielfeldes
-	GameField(Scoreboard scoreboard){
+
+	// Kontruktor - Aufbau des Spielfeldes
+	GameField(Scoreboard scoreboard) {
 		this.setLayout(new GridLayout(4, 4));
 		fields = new JLabel[16];
 		logic = new Logic(fields, scoreboard);
-		
+
 		/* Style der Kaestchen des Spielfeldes festlegen */
 		for (int i = 0; i < 16; i++) {
 			fields[i] = new JLabel("", JLabel.CENTER);
 			fields[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			fields[i].setFont(new Font("Open Sans", Font.PLAIN, 30));
+			//Farben sichtbar
 			fields[i].setOpaque(true);
 			this.add(fields[i]);
 		}
-		//Ausführen der Draw Methode
+		// Ausführen der Draw Methode
 		logic.draw();
 
 		/*

@@ -106,8 +106,11 @@ public class Logic {
 	public void moveLeft() {
 		// Das Spiel muss laufen um die folgenden Bedingungen auszuführen
 		if (gameRunning == true) {
+			// Iteration auf Y-Achse
 			for (int i = 0; i < 4; i++) {
+				// Iteration auf X-Achse
 				for (int k = 4 * i + 1; k < 4 * i + 4; k++) {
+
 					for (int n = k - 1; n >= 4 * i; n--) {
 
 						/*
@@ -119,8 +122,8 @@ public class Logic {
 							fields[n + 1].setText("");
 
 							/*
-							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem
-							 * leeren Feld wieder die weiße Farbe setzen
+							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem leeren
+							 * Feld wieder die weiße Farbe setzen
 							 */
 							fields[n].setBackground(getFieldColor(n));
 							fields[n + 1].setBackground(getFieldColor(n + 1));
@@ -151,7 +154,9 @@ public class Logic {
 	public void moveRight() {
 		// Das Spiel muss laufen um die folgenden Bedingungen auszuführen
 		if (gameRunning == true) {
+			// Iteration auf Y-Achse
 			for (int i = 0; i < 4; i++) {
+				// Iteration auf X-Achse
 				for (int k = 4 * i + 3; k >= 4 * i; k--) {
 					for (int n = k + 1; n <= 4 * i + 3; n++) {
 
@@ -164,8 +169,8 @@ public class Logic {
 							fields[n - 1].setText("");
 
 							/*
-							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem
-							 * leeren Feld wieder die weiße Farbe setzen
+							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem leeren
+							 * Feld wieder die weiße Farbe setzen
 							 */
 							fields[n].setBackground(getFieldColor(n));
 							fields[n - 1].setBackground(getFieldColor(n - 1));
@@ -196,9 +201,12 @@ public class Logic {
 	public void moveUp() {
 		// Das Spiel muss laufen um die folgenden Bedingungen auszuführen
 		if (gameRunning == true) {
-			for (int i = 12; i < 16; i++) {
-				for (int k = i - 8; k <= i; k += 4) {
-					for (int n = k - 4; n >= i - (4 * 3); n -= 4) {
+			// Iteration auf X-Achse
+			for (int i = 0; i < 4; i++) {
+				// Iteration auf Y-Achse
+				for (int k = i; k < i + 12; k += 4) {
+					// Felder überprüfen und in die move Richtung bewegen
+					for (int n = k; n >= 0; n -= 4) {
 
 						/*
 						 * Checken ob das nächste Feld leer ist oder die gleiche Zahl im folgenden Feld
@@ -209,8 +217,8 @@ public class Logic {
 							fields[n + 4].setText("");
 
 							/*
-							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem
-							 * leeren Feld wieder die weiße Farbe setzen
+							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem leeren
+							 * Feld wieder die weiße Farbe setzen
 							 */
 							fields[n].setBackground(getFieldColor(n));
 							fields[n + 4].setBackground(getFieldColor(n + 4));
@@ -242,7 +250,9 @@ public class Logic {
 	public void moveDown() {
 		// Das Spiel muss laufen um die folgenden Bedingungen auszuführen
 		if (gameRunning == true) {
+			// Iteration auf X-Achse
 			for (int i = 0; i < 4; i++) {
+				// Iteration auf Y-Achse
 				for (int k = i + 8; k >= i; k -= 4) {
 					for (int n = (k + 4); n <= i + 12; n += 4) {
 
@@ -255,8 +265,8 @@ public class Logic {
 							fields[n - 4].setText("");
 
 							/*
-							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem
-							 * leeren Feld wieder die weiße Farbe setzen
+							 * Hintergrundfarbe in dem neues Feld der Zahl anpassen setzen und in dem leeren
+							 * Feld wieder die weiße Farbe setzen
 							 */
 							fields[n].setBackground(getFieldColor(n));
 							fields[n - 4].setBackground(getFieldColor(n - 4));
@@ -314,10 +324,22 @@ public class Logic {
 			gameRunning = false;
 
 			// Message Game Over
-			JOptionPane.showMessageDialog(null, "Game Over\nScore: " + score);
+			// Array aus den zur Verfügung stehenden Optionen
+			Object[] options = { "Beenden", "Neues Spiel" };
+			int choosen = JOptionPane.showOptionDialog(null, "Game Over\nScore: " + score,
+					"Game Over - Score: " + score, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+					options, options[0]);
 
-			// Game beenden
-			System.exit(0);
+			switch (choosen) {
+			case 0:
+				// Game beenden
+				System.exit(0);
+				break;
+			case 1:
+				// Neues Spiel in vorhandenen Instanz starten
+				MainWindow.createInstance();
+				break;
+			}
 		}
 	}
 }
