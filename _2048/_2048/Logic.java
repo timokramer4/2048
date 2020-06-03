@@ -44,37 +44,37 @@ public class Logic {
 
 			switch (fieldnumber) {
 			case 2:
-				tempColor = new Color(141, 90, 151);
+				tempColor = new Color(236, 234, 226);
 				break;
 			case 4:
-				tempColor = new Color(128, 155, 206);
+				tempColor = new Color(237, 224, 200);
 				break;
 			case 8:
-				tempColor = new Color(254, 147, 140);
+				tempColor = new Color(232, 179, 129);
 				break;
 			case 16:
-				tempColor = new Color(127, 229, 203);
+				tempColor = new Color(223, 145, 96);
 				break;
 			case 32:
-				tempColor = new Color(226, 207, 234);
+				tempColor = new Color(230, 130, 104);
 				break;
 			case 64:
-				tempColor = new Color(244, 97, 151);
+				tempColor = new Color(218, 99, 67);
 				break;
 			case 128:
-				tempColor = new Color(78, 205, 196);
+				tempColor = new Color(239, 219, 124);
 				break;
 			case 256:
-				tempColor = new Color(215, 255, 171);
+				tempColor = new Color(241, 208, 75);
 				break;
 			case 512:
-				tempColor = new Color(239, 123, 69);
+				tempColor = new Color(223, 194, 77);
 				break;
 			case 1024:
-				tempColor = new Color(197, 174, 135);
+				tempColor = new Color(227, 186, 20);
 				break;
 			case 2048:
-				tempColor = new Color(183, 110, 121);
+				tempColor = new Color(236, 196, 0);
 				break;
 			default:
 				tempColor = new Color(216, 226, 220);
